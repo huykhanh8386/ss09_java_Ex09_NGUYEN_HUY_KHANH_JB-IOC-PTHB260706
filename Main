@@ -1,0 +1,41 @@
+import java.util.Scanner;
+public class Ex09Session09Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("===== RIKKEI BANK =====");
+        System.out.print("Nhập tên chủ thẻ: ");
+        String holderName = scanner.nextLine();
+        Ex09Session09 account = new Ex09Session09(holderName);
+        int choice;
+        do {
+            System.out.println("\n========== MENU ==========");
+            System.out.println("1. Xem thông tin tài khoản");
+            System.out.println("2. Chi tiêu");
+            System.out.println("3. Thanh toán nợ");
+            System.out.println("0. Thoát");
+            System.out.println("==========================");
+            System.out.print("Nhập lựa chọn: ");
+            choice = Integer.parseInt(scanner.nextLine());
+            switch (choice) {
+                case 1:
+                    account.displayAccount();
+                    break;
+                case 2:
+                    System.out.print("Nhập số tiền muốn chi tiêu: ");
+                    double amountSpend = Double.parseDouble(scanner.nextLine());
+                    account.spend(amountSpend);
+                    break;
+                case 3:
+                    System.out.print("Nhập số tiền muốn thanh toán: ");
+                    double amountPay = Double.parseDouble(scanner.nextLine());
+                    account.payDebt(amountPay);
+                    break;
+                case 0:
+                    System.out.println("Đã thoát chương trình!");
+                    break;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ!");
+            }
+        } while (choice != 0);
+    }
+}
