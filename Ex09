@@ -1,0 +1,55 @@
+public class Ex09Session09 {
+    public static final double CREDIT_LIMIT = 50000000.0;
+    private static int autoId = 1001;
+
+    private String accountId;
+    private String holderName;
+    private double currentDebt;
+    public Ex09Session09(String holderName) {
+        this.accountId = "CREDIT-" + autoId++;
+        this.holderName = holderName;
+        this.currentDebt = 0;
+    }
+    public boolean spend(double amount) {
+        if (amount <= 0) {
+            System.out.println("Lỗi: Số tiền chi tiêu phải lớn hơn 0!");
+            return false;
+        }
+        if (this.currentDebt + amount <= CREDIT_LIMIT) {
+            this.currentDebt += amount;
+            System.out.printf("[Chi tiêu] %,.0f VNĐ => Thành công!%n", amount);
+            System.out.printf("Dư nợ hiện tại: %,.0f VNĐ%n", this.currentDebt);
+            return true;
+        } else {
+            System.out.printf("[Chi tiêu] %,.0f VNĐ => TỪ CHỐI! VƯỢT HẠN MỨC%n", amount);
+            System.out.printf("Hạn mức khả dụng chỉ còn: %,.0f VNĐ%n", getAvailableCredit());
+            return false;
+        }
+    }
+    public void payDebt(double amount) {
+        if (amount <= 0) {
+            System.out.println("Lỗi: Số tiền thanh toán phải lớn hơn 0!");
+            return;
+        }
+        if (amount > this.currentDebt) {
+            System.out.println("Lỗi: Số tiền thanh toán không được lớn hơn dư nợ hiện tại!");
+            return;
+        }
+        this.currentDebt -= amount;
+        System.out.printf("Thanh toán %,.0f VNĐ thành công!%n", amount);
+        System.out.printf("Dư nợ còn lại: %,.0f VNĐ%n", this.currentDebt);
+    }
+    public double getAvailableCredit() {
+        return CREDIT_LIMIT - this.currentDebt;
+    }
+    public void displayAccount() {
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println("|             SAO KÊ THẺ TÍN DỤNG RIKKEI BANK          |");
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println("Mã thẻ: " + this.accountId);
+        System.out.println("Chủ thẻ: " + this.holderName);
+        System.out.printf("Hạn mức tín dụng: %,.0f VNĐ%n", CREDIT_LIMIT);
+        System.out.printf("Dư nợ hiện tại: %,.0f VNĐ%n", this.currentDebt);
+        System.out.printf("Hạn mức còn lại: %,.0f VNĐ%n", getAvailableCredit());
+    }
+}
